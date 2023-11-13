@@ -1,0 +1,24 @@
+# Local .terraform directories
+**/.terraform/*
+
+# .tfstate files
+*.tfstate
+*.tfstate.*
+.terraform.lock.hcl
+
+# Crash log files
+crash.log
+
+# Exclude IDE and editor directories
+.idea/
+*.swp
+*.swo
+*~
+
+# Exclude the build directory
+builds/
+
+# Exclude any .zip files (if you're packaging Lambda functions, etc.)
+*.zip
+
+*.DS_Store

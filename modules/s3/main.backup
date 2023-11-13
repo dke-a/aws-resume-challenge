@@ -1,0 +1,52 @@
+resource "aws_s3_bucket" "resume_bucket" {
+    bucket = "cloudresume-don"
+     # Or another appropriate ACL
+}
+
+resource "aws_s3_bucket_policy" "resume_bucket_policy" {
+    bucket = aws_s3_bucket.resume_bucket.id
+
+    policy = jsonencode({
+        Id        = "PolicyForCloudFrontPrivateContent"
+        Statement = [
+            {
+                Action    = "s3:GetObject"
+                Condition = {
+                    StringEquals = {
+                        "AWS:SourceArn" = "arn:aws:cloudfront::408810908626:distribution/ER0K5G3S0PD5R"
+                    }
+                }
+                Effect    = "Allow"
+                Principal = {
+                    Service = "cloudfront.amazonaws.com"
+                }
+                Resource  = "${aws_s3_bucket.resume_bucket.arn}/*"
+                Sid       = "AllowCloudFrontServicePrincipal"
+            },
+        ]
+        Version   = "2008-10-17"
+    })
+}
+
+resource "aws_s3_bucket_acl" "resume_bucket_acl" {
+    bucket = aws_s3_bucket.resume_bucket.id
+    acl = "private"
+}
+
+resource "aws_s3_bucket_server_side_encryption_configuration" "resume_bucket_sse" {
+    bucket = aws_s3_bucket.resume_bucket.id
+        rule {
+            apply_server_side_encryption_by_default {
+                sse_algorithm = "AES256"
+            }
+        }
+  
+}
+
+resource "aws_s3_bucket_versioning" "resume_bucket_versioning" {
+    bucket = aws_s3_bucket.resume_bucket.id
+    versioning_configuration {
+       status = "Disabled"
+    }
+}
+
