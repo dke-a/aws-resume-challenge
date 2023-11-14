@@ -12,17 +12,20 @@ jobs:
           AWS_REGION: 'us-east-1' 
     
         steps:
-          - uses: actions/checkout@v2
-    
-          - name: Set up Python
-            uses: actions/setup-python@v2
-            with:
-              python-version: '3.x'
-    
-          - name: Install Python dependencies
-            run: pip install -r requirements.txt
-    
-          - name: Run Python tests
-            run: pytest
+         - uses: actions/checkout@v2
+
+         - name: Set up Python
+           uses: actions/setup-python@v2
+           with:
+            python-version: '3.x'
+        
+         - name: List files in the repository
+           run: ls -l
+            
+         - name: Install Python dependencies
+           run: pip install -r requirements.txt
+
+         - name: Run Python tests
+           run: pytest
     
     
