@@ -1,4 +1,50 @@
-# S3 Bucket Module Configuration
+# Import Resources Notes
+
+This contains code that was used to import AWS resources into Terraform. Most resources were imported into AWS modules from the registry.
+
+## Import Blocks to Generate Resource Blocks
+
+```hcl
+import {
+    to = aws_s3_bucket.resume_bucket
+    id = "cloudresume-don"
+}
+
+import {
+    to = aws_dynamodb_table.visit_counter
+    id = "visitCounter"
+}
+
+import {
+    to = aws_cloudfront_distribution.cf_distribution
+    id = "ER0K5G3S0PD5R"
+}
+
+import {
+    to = aws_apigatewayv2_api.apigw
+    id = "9drbe81ae7"
+}
+
+import {
+    to = aws_lambda_function.lambda_update_count
+    id = "countVisit"
+}
+```
+
+**Run `terraform plan -generate-config-out=generated_resources.tf`** to generate resource blocks.
+
+The above was also necessary to see which attributes were being imported by Terraform. The values `id` arguments were retrieved usin the CLI or the console. 
+
+## Importing into Modules 
+
+Note that each import block has module blocks associated with it. 
+
+```hcl
+import {
+  to = module.resume_bucket.aws_s3_bucket.this[0]
+  id = "cloudresume-don"
+}
+
 module "resume_bucket" {
   source = "terraform-aws-modules/s3-bucket/aws"
   bucket = "cloudresume-don"
@@ -10,17 +56,16 @@ module "resume_bucket" {
   }
 }
 
-
-resource "aws_s3_object" "s3_resume_object" {
-  for_each = fileset("${path.module}/s3_resume_bucket_files", "*")
-
-  bucket = "cloudresume-don"                                     # Specify your S3 bucket name
-  key    = each.value                                            # The key (path) in the bucket
-  source = "${path.module}/s3_resume_bucket_files/${each.value}" # Path to the local file
-  etag   = filemd5("${path.module}/s3_resume_bucket_files/${each.value}")
+import {
+  to = module.resume_bucket.aws_s3_bucket_versioning.this[0]
+  id = "cloudresume-don"
 }
 
-# CloudFront Distribution Module Configuration
+import {
+  to = module.cloudfront_resume.aws_cloudfront_distribution.this[0]
+  id = "ER0K5G3S0PD5R"
+}
+
 module "cloudfront_resume" {
   source              = "terraform-aws-modules/cloudfront/aws"
   aliases             = ["*.donangeles.com", "donangeles.com"]
@@ -64,7 +109,26 @@ module "cloudfront_resume" {
   }
 }
 
-# DynamoDB Table Module Configuration
+
+import {
+  to = module.ddb_resume_table.aws_dynamodb_table.this[0]
+  id = "visitCounter"
+}
+
+module "ddb_resume_table" {
+  source = "terraform-aws-modules/dynamodb-table/aws"
+  name   = "visitCounter"
+
+  # Setting timeouts and tags explicitly to override module defaults
+  timeouts = {}
+  tags     = null
+}
+
+import {
+  to = module.apigw_resume.aws_apigatewayv2_api.this[0]
+  id = "9drbe81ae7"
+}
+
 module "ddb_resume_table" {
   source = "terraform-aws-modules/dynamodb-table/aws"
   name   = "visitCounter"
@@ -101,8 +165,18 @@ module "apigw_resume" {
   #   }
   # }
 }
+```
 
-# AWS Lambda Function Resource Configuration
+Code below shows code ti import into a lambda module and then a resource block that was eventually used to import the existing lambda function.
+
+Importing into the lambda module was not as straightforward as with other modules. There were some functionality differences but need to test again to output actual error/incompatibility.
+
+```hcl
+import {
+  to = module.lambda_resume_update_counts.aws_lambda_function.this[0]
+  id = "countVisit"
+}
+
 resource "aws_lambda_function" "lambda_update_count" {
   function_name = "countVisit"
   handler       = "lambda_function.lambda_handler"
@@ -126,17 +200,4 @@ resource "aws_lambda_function" "lambda_update_count" {
   }
 
 }
-
-data "archive_file" "update_count_zip" {
-  type        = "zip"
-  source_dir  = "${path.module}/lambda_functions/update_count"
-  output_path = "${path.module}/lambda_functions/builds/update_count.zip"
-}
-
-output "lambda_function_source_code_hash" {
-  description = "The base64-encoded SHA256 hash of the Lambda function's source code"
-  value       = aws_lambda_function.lambda_update_count.source_code_hash
-  #data.archive_file.update_count_zip.output_base64sha256 
-  #filebase64sha256("${path.module}/lambda_functions/update_count.zip") 
-  #aws_lambda_function.lambda_update_count.source_code_hash
-}
+```

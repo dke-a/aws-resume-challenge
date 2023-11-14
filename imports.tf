@@ -1,33 +1,3 @@
-# import {
-#   to = module.resume_bucket.aws_s3_bucket.this[0]
-#   id = "cloudresume-don"
-# }
-
-# import {
-#   to = module.resume_bucket.aws_s3_bucket_versioning.this[0]
-#   id = "cloudresume-don"
-# }
-
-# import {
-#   to = module.cloudfront_resume.aws_cloudfront_distribution.this[0]
-#   id = "ER0K5G3S0PD5R"
-# }
-
-# import {
-#   to = module.ddb_resume_table.aws_dynamodb_table.this[0]
-#   id = "visitCounter"
-# }
-
-# import {
-#   to = module.apigw_resume.aws_apigatewayv2_api.this[0]
-#   id = "9drbe81ae7"
-# }
-
-# import {
-#   to = module.lambda_resume_update_counts.aws_lambda_function.this[0]
-#   id = "countVisit"
-# }
-
 # module "lambda_resume_update_count" {
 #   create = true
 #   source        = "terraform-aws-modules/lambda/aws"
@@ -70,21 +40,11 @@
 # }
 
 # import {
-#     to = aws_dynamodb_table.visit_counter
-#     id = "visitCounter"
+#   to = aws_apigatewayv2_integration.countVisit
+#   id = "9drbe81ae7/2mk7eh1"
 # }
 
 # import {
-#     to = aws_cloudfront_distribution.cf_distribution
-#     id = "ER0K5G3S0PD5R"
-# }
-
-# import {
-#     to = aws_apigatewayv2_api.apigw
-#     id = "9drbe81ae7"
-# }
-
-# import {
-#     to = aws_lambda_function.lambda_update_count
-#     id = "countVisit"
+#   to = aws_apigatewayv2_integration.getVisitCount
+#   id = "9drbe81ae7/uaxehuj"
 # }

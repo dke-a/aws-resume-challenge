@@ -1,0 +1,42 @@
+# __generated__ by Terraform
+# Please review these resources and move them into your main configuration files.
+
+# __generated__ by Terraform from "9drbe81ae7/2mk7eh1"
+resource "aws_apigatewayv2_integration" "countVisit" {
+  api_id                        = "9drbe81ae7"
+  connection_id                 = null
+  connection_type               = "INTERNET"
+  content_handling_strategy     = null
+  credentials_arn               = null
+  description                   = null
+  integration_method            = "POST"
+  integration_subtype           = null
+  integration_type              = "AWS_PROXY"
+  integration_uri               = "arn:aws:lambda:us-east-1:408810908626:function:countVisit"
+  passthrough_behavior          = null
+  payload_format_version        = "2.0"
+  request_parameters            = {}
+  request_templates             = {}
+  template_selection_expression = null
+  timeout_milliseconds          = 30000
+}
+
+# __generated__ by Terraform from "9drbe81ae7/uaxehuj"
+resource "aws_apigatewayv2_integration" "getVisitCount" {
+  api_id                        = "9drbe81ae7"
+  connection_id                 = null
+  connection_type               = "INTERNET"
+  content_handling_strategy     = null
+  credentials_arn               = null
+  description                   = null
+  integration_method            = "POST"
+  integration_subtype           = null
+  integration_type              = "AWS_PROXY"
+  integration_uri               = "arn:aws:lambda:us-east-1:408810908626:function:getVisitCount"
+  passthrough_behavior          = null
+  payload_format_version        = "1.0"
+  request_parameters            = {}
+  request_templates             = {}
+  template_selection_expression = null
+  timeout_milliseconds          = 30000
+}
