@@ -21,4 +21,5 @@ builds/
 # Exclude any .zip files (if you're packaging Lambda functions, etc.)
 *.zip
 
-*.DS_Store
+.DS_Store
+.pytest_cache
