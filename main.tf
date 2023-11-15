@@ -5,7 +5,7 @@ module "resume_bucket" {
 
   # Versioning to be enabled once VC is setup.
   versioning = {
-    enabled    = false
+    enabled    = true
     mfa_delete = false
   }
 }
