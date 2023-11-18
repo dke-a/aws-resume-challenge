@@ -1,3 +1,15 @@
+locals {
+  mime_types = {
+    "html" = "text/html",
+    "css"  = "text/css",
+    "js"   = "application/javascript",
+    "png"  = "image/png",
+    "jpg"  = "image/jpeg",
+    "svg"  = "image/svg+xml",
+    // Add other file extensions and MIME types as needed
+  }
+}
+
 # S3 Bucket Module Configuration
 module "resume_bucket" {
   source = "terraform-aws-modules/s3-bucket/aws"
@@ -11,13 +23,23 @@ module "resume_bucket" {
 }
 
 
-resource "aws_s3_object" "s3_resume_object" {
-  for_each = fileset("${path.module}/s3_resume_bucket_files", "*")
+# resource "aws_s3_object" "s3_resume_object" {
+#   for_each = fileset("${path.module}/s3_resume_bucket_files", "*")
 
-  bucket = "cloudresume-don"                                     # Specify your S3 bucket name
-  key    = each.value                                            # The key (path) in the bucket
-  source = "${path.module}/s3_resume_bucket_files/${each.value}" # Path to the local file
-  etag   = filemd5("${path.module}/s3_resume_bucket_files/${each.value}")
+#   bucket = "cloudresume-don"                                     # Specify your S3 bucket name
+#   key    = each.value                                            # The key (path) in the bucket
+#   source = "${path.module}/s3_resume_bucket_files/${each.value}" # Path to the local file
+#   etag   = filemd5("${path.module}/s3_resume_bucket_files/${each.value}")
+# }
+
+resource "aws_s3_object" "s3_resume_object" {
+  for_each = fileset("${path.module}/s3_resume_bucket_files", "**/*")
+
+  bucket       = "cloudresume-don"
+  key          = each.value
+  source       = "${path.module}/s3_resume_bucket_files/${each.value}"
+  etag         = filemd5("${path.module}/s3_resume_bucket_files/${each.value}")
+  content_type = lookup(local.mime_types, split(".", each.value)[1], "binary/octet-stream")
 }
 
 # CloudFront Distribution Module Configuration
