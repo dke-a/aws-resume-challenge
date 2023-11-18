@@ -22,4 +22,4 @@ builds/
 *.zip
 
 .DS_Store
-.pytest_cache
+.pytest_cache.DS_Store
