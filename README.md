@@ -1,5 +1,7 @@
 # **Cloud Resume Challenge**
 
+![Alt text](images/cloud-resume-diagram.png)
+
 This repository contains my implementation of the **[Cloud Resume Challenge](https://cloudresumechallenge.dev/instructions/)** by Forrest Brazeal.
 
 The challenge involves building a static resume website hosted in AWS using infrastructure as code. I completed this challenge to demonstrate expertise with:
