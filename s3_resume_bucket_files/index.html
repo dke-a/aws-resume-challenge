@@ -870,50 +870,59 @@
     })
 
   </script>
-<script>
-  document.addEventListener('DOMContentLoaded', (event) => {
-    const sections = document.querySelectorAll('.home-resume section');
-    const navLinks = document.querySelectorAll('.home-links-to-sections a');
-    const homeMain = document.querySelector('.home-main'); // Select the .home-main element
+  <script>
+    document.addEventListener('DOMContentLoaded', (event) => {
+      const sections = document.querySelectorAll('.home-resume section');
+      const navLinks = document.querySelectorAll('.home-links-to-sections a');
+      const homeMain = document.querySelector('.home-main'); // Select the .home-main element
 
-    function isScrolledToBottom(element) {
-      return element.scrollHeight - element.scrollTop - element.clientHeight < 1;
-    }
+      function isScrolledToBottom(element) {
+        return element.scrollHeight - element.scrollTop - element.clientHeight < 1;
+      }
 
-    function changeLinkState() {
-      let index = sections.length;
+      function changeLinkState() {
+        let index = sections.length;
 
-      console.log("Scroll Top: ", homeMain.scrollTop); // Debugging log
+        console.log("Scroll Top: ", homeMain.scrollTop); // Debugging log
 
-      if (isScrolledToBottom(homeMain)) {
-        navLinks.forEach((link) => link.classList.remove('active'));
-        navLinks[navLinks.length - 1].classList.add('active');
-      } else {
-        while (--index && homeMain.scrollTop + 50 < sections[index].offsetTop) {
-          console.log("Section index and offsetTop: ", index, sections[index].offsetTop); // Debugging log
-        }
+        if (isScrolledToBottom(homeMain)) {
+          navLinks.forEach((link) => link.classList.remove('active'));
+          navLinks[navLinks.length - 1].classList.add('active');
+        } else {
+          while (--index && homeMain.scrollTop + 50 < sections[index].offsetTop) {
+            console.log("Section index and offsetTop: ", index, sections[index].offsetTop); // Debugging log
+          }
 
-        navLinks.forEach((link) => link.classList.remove('active'));
-        if (navLinks[index]) {
-          navLinks[index].classList.add('active');
+          navLinks.forEach((link) => link.classList.remove('active'));
+          if (navLinks[index]) {
+            navLinks[index].classList.add('active');
+          }
         }
       }
-    }
 
-    if (homeMain) {
-      changeLinkState();
-      homeMain.addEventListener('scroll', changeLinkState);
-    }
-  });
-</script>
+      if (homeMain) {
+        changeLinkState();
+        homeMain.addEventListener('scroll', changeLinkState);
+      }
+    });
+  </script>
 
 
   <script type="text/javascript">
-    fetch('https://9drbe81ae7.execute-api.us-east-1.amazonaws.com/countVisit')
-      .then(response => response.json())
-      .then(response => { document.getElementById("visits").innerHTML = response })
-      .then(response => { document.getElementById("counter-burger").innerHTML = response })
-      .then(data => console.log(data));
+    document.addEventListener('DOMContentLoaded', function () {
+      // POST method to increment the visitor count
+      fetch('https://9drbe81ae7.execute-api.us-east-1.amazonaws.com/countVisit', {
+        method: 'POST'
+      })
+        .then(response => response.json())
+        .then(data => {
+          // Assuming the response contains the count directly
+          document.getElementById("visits").innerText = data;
+          document.getElementById("counter-burger").innerText = data;
+        })
+        .catch(error => console.error('Error:', error));
+    });
+
   </script>
 </body>
 
