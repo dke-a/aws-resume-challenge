@@ -1,10 +1,12 @@
-import pytest
 import json
-from lambda_functions.update_count.lambda_function import lambda_handler
-from moto import mock_dynamodb
-import boto3
-from botocore.exceptions import ClientError
 import os
+
+import boto3
+import pytest
+from moto import mock_dynamodb
+from botocore.exceptions import ClientError
+
+from lambda_functions.update_count.lambda_function import lambda_handler
 
 # Mock AWS Services
 @pytest.fixture(scope='function')
@@ -51,8 +53,14 @@ def dynamodb_table(dynamodb):
 
 # Tests
 def test_lambda_handler(dynamodb_table):
-    # Simulate Lambda event and context
-    event = {}
+    # Simulate Lambda event for a POST request
+    event = {
+        'requestContext': {
+            'http': {
+                'method': 'POST'
+            }
+        }
+    }
     context = {}
 
     # Call the lambda handler
@@ -62,17 +70,24 @@ def test_lambda_handler(dynamodb_table):
     assert response['statusCode'] == 200
     # Check if the response body is correct
     response['body'] = int(response['body'])
-    body = json.dumps(response['body'])#json.loads(response['body'])
+    body = json.dumps(response['body'])
     
-    assert body == str(1)  # Assuming we start at 0 and the first call should return 1.
+    assert body == str(1)  # Assuming start at 0, first call should return 1.
+
 
 def test_lambda_handler_failure(dynamodb_table):
     # Inject an error by deleting the table
     dynamodb_table.delete()
     dynamodb_table.meta.client.get_waiter('table_not_exists').wait(TableName='visitCounter')
 
-    # Simulate Lambda event and context
-    event = {}
+    # Simulate Lambda event for a POST request
+    event = {
+        'requestContext': {
+            'http': {
+                'method': 'POST'
+            }
+        }
+    }
     context = {}
 
     # Call the lambda handler
@@ -82,3 +97,23 @@ def test_lambda_handler_failure(dynamodb_table):
     assert response['statusCode'] == 500
     # Check if the body contains the correct error message
     assert response['body'] == "Internal Server Error"
+
+
+def test_lambda_handler_get_request(dynamodb_table):
+    # Simulate Lambda event for a GET request
+    event = {
+        'requestContext': {
+            'http': {
+                'method': 'GET'
+            }
+        }
+    }
+    context = {}
+
+    # Call the lambda handler
+    response = lambda_handler(event, context)
+
+    # Check if HTTP status code is 405 (Method Not Allowed) or the expected code for GET requests
+    assert response['statusCode'] == 405
+    # Optionally, check the response body if it contains a specific message for GET requests
+    # assert response['body'] == "Expected message for GET requests"

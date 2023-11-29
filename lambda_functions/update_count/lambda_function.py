@@ -29,36 +29,36 @@ def update_visit_count(table):
 # Lambda handler function
 def lambda_handler(event, context):
     dynamodb = boto3.resource('dynamodb')
-    
-    # Get the DynamoDB table name from environment variables
     table_name = os.environ.get('DYNAMODB_TABLE_NAME', 'visitCounter')
     table = dynamodb.Table(table_name)
-    
-    try:
-        visit_count = update_visit_count(table)
-        
-        response = {
-            "isBase64Encoded": False,
-            'statusCode': 200,
-            'headers': {
-                "content-type": "application/json",
-                'Access-Control-Allow-Headers': 'Content-Type',
-                'Access-Control-Allow-Origin': '*',
-                'Access-Control-Allow-Methods': 'OPTIONS,POST,GET'
-            },
-            'body': str(visit_count)
-        }
-        
-        # Log successful update
-        logger.info("Successfully updated visit count")
-        
-    except Exception as e:
-        # Log the error and re-raise the exception
-        logger.error("Lambda execution failed: %s", str(e))
-        return {
-            "isBase64Encoded": False,
-            'statusCode': 500,
-            'body': "Internal Server Error"
-        }
+
+    # Check if the request is a POST request
+    if event['requestContext']['http']['method'] == 'POST':
+        try:
+            visit_count = update_visit_count(table)
+            body = str(visit_count)
+            statusCode = 200
+            logger.info("Successfully updated visit count")
+        except Exception as e:
+            logger.error("Lambda execution failed: %s", str(e))
+            body = "Internal Server Error"
+            statusCode = 500
+    else:
+        # If not a POST request, return a 405 Method Not Allowed response
+        body = "Method Not Allowed"
+        statusCode = 405
+
+    response = {
+        "isBase64Encoded": False,
+        'statusCode': statusCode,
+        'headers': {
+            "content-type": "application/json",
+            'Access-Control-Allow-Headers': 'Content-Type',
+            'Access-Control-Allow-Origin': '*',
+            'Access-Control-Allow-Methods': 'OPTIONS,POST,GET'
+        },
+        'body': body
+    }
 
     return response
+
