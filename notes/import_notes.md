@@ -33,11 +33,11 @@ import {
 
 **Run `terraform plan -generate-config-out=generated_resources.tf`** to generate resource blocks.
 
-The above was also necessary to see which attributes were being imported by Terraform. The values `id` arguments were retrieved usin the CLI or the console. 
+The above was also necessary to see which attributes were being imported by Terraform. The values `id` arguments were retrieved usin the CLI or the console.
 
-## Importing into Modules 
+## Importing into Modules
 
-Note that each import block has module blocks associated with it. 
+Note that each import block has module blocks associated with it.
 
 ```hcl
 import {
@@ -201,3 +201,54 @@ resource "aws_lambda_function" "lambda_update_count" {
 
 }
 ```
+
+---
+
+## Changes made to allow only /POST method
+
+**Performed November 29, 2023**
+
+APIGW module resource already exists and need for TF to manage routes and integrations as well. Intend to remove /GET route to only enable /POST and /OPTIONS methods through the APIGW.
+
+The following shows how to import into the APIGW module:
+```bash
+terraform import 'module.apigw_resume.aws_apigatewayv2_route.this["OPTIONS /countVisit"]' 9drbe81ae7/1ry1kis
+terraform import 'module.apigw_resume.aws_apigatewayv2_route.this["POST /countVisit"]' 9drbe81ae7/325n1no
+terraform import 'module.apigw_resume.aws_apigatewayv2_route.this["GET /countVisit"]' 9drbe81ae7/cc07fi2   
+
+terraform import 'module.apigw_resume.aws_apigatewayv2_integration.this["GET /countVisit"]' 9drbe81ae7/2mk7eh1
+terraform import 'module.apigw_resume.aws_apigatewayv2_integration.this["OPTIONS /countVisit"]' 9drbe81ae7/2mk7eh1
+terraform import 'module.apigw_resume.aws_apigatewayv2_integration.this["POST /countVisit"]' 9drbe81ae7/2mk7eh1
+```
+
+Initially just tried to set `create_routes_and_integrations` to `true` but applying `plan` shows that the resources will be created.
+
+```hcl
+create_routes_and_integrations = true
+
+
+integrations = {
+
+  "POST /countVisit" = {
+    lambda_arn             = aws_lambda_function.lambda_update_count.arn
+    connection_type        = "INTERNET"
+    integration_type       = "AWS_PROXY"
+    payload_format_version = "2.0"
+    timeout_milliseconds   = 30000
+  }
+
+  "OPTIONS /countVisit" = {
+    lambda_arn             = aws_lambda_function.lambda_update_count.arn
+    connection_type        = "INTERNET"
+    integration_type       = "AWS_PROXY"
+    payload_format_version = "2.0"
+    timeout_milliseconds   = 30000
+  }
+}
+```
+
+![](images/20231129162438.png)
+
+Applying the imports first allows Terraform to recognize its current status.
+
+

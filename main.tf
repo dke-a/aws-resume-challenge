@@ -108,20 +108,30 @@ module "apigw_resume" {
     allow_origins = ["https://www.donangeles.com", "https://donangeles.com"]
   }
 
-  create_api_domain_name = false
-  create_default_stage   = false
+  create_api_domain_name         = false
+  create_default_stage           = false
+  create_routes_and_integrations = true
 
 
-  # integrations = {
+  integrations = {
 
-  #   "POST /countVisit" = {
-  #     lambda_arn               = aws_lambda_function.lambda_update_count.arn
-  #     connection_type               = "INTERNET"
-  #     integration_type              = "AWS_PROXY"
-  #     payload_format_version   = "2.0"
-  #     timeout_milliseconds          = 30000
-  #   }
-  # }
+    "POST /countVisit" = {
+      lambda_arn             = aws_lambda_function.lambda_update_count.arn
+      connection_type        = "INTERNET"
+      integration_type       = "AWS_PROXY"
+      payload_format_version = "2.0"
+      timeout_milliseconds   = 30000
+    }
+
+    "OPTIONS /countVisit" = {
+      lambda_arn             = aws_lambda_function.lambda_update_count.arn
+      connection_type        = "INTERNET"
+      integration_type       = "AWS_PROXY"
+      payload_format_version = "2.0"
+      timeout_milliseconds   = 30000
+    }
+
+  }
 }
 
 # AWS Lambda Function Resource Configuration
