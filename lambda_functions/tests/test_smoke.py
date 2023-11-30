@@ -24,26 +24,14 @@ def test_api_returns_updated_value():
     # Optionally, you can add another check to query the database directly (if accessible)
     # to verify that the count is also incremented there.
 
-# def test_api_response_to_unexpected_input():
-#     # Send a malformed request (for example, a POST request instead of expected GET)
-#     response = requests.post(API_URL, json={"bad": "data"})
-#     # The API should return a 400 or 405 status code for bad requests
-#     assert response.status_code in [400, 404, 405]
+def test_api_response_to_get_request():
+    # Send a GET request which is not the expected method for the API
+    response = requests.get(API_URL)
+    # The API should return a status code indicating a bad request (e.g., 400 or 405)
+    assert response.status_code in [400, 405]
 
-# def test_uninitialized_visitor_count():
-#     # For this test, you would typically reset the environment or use a separate test environment
-#     # Assuming that the API creates an initial count if not present
-#     # Reset the environment or use a new database entry to simulate first-time invocation
-
-#     # Send a request to the API as if it is the first invocation
-#     response = requests.get(API_URL)
-#     assert response.status_code == 200
-#     body = json.loads(response.text)
-#     # Check if the visitor count is initialized properly (assuming it starts at 1)
-#     assert body['visitorCount'] == 1
 
 # Execute the tests
 if __name__ == "__main__":
     test_api_returns_updated_value()
-    #test_api_response_to_unexpected_input()
-    #test_uninitialized_visitor_count()
+    test_api_response_to_get_request()
