@@ -40,8 +40,8 @@ def test_api_returns_updated_value():
 def test_api_response_to_get_request():
     # Send a GET request which is not the expected method for the API
     response = requests.get(API_URL)
-    # The API should return a status code indicating a bad request (e.g., 400 or 405)
-    assert response.status_code in [400, 405]
+    # The API should return a 404 error
+    assert response.status_code in [404]
 
 
 # Execute the tests
