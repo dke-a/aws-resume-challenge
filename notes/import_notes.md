@@ -249,6 +249,6 @@ integrations = {
 
 ![](images/20231129162438.png)
 
-Applying the imports first allows Terraform to recognize its current status.
+Applying the imports first allows Terraform to recognize its current status and thus no changes were shown after `plan`.
 
 

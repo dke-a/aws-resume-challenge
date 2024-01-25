@@ -1,6 +1,6 @@
 # **Cloud Resume Challenge**
 
-![Alt text](images/cloud-resume-diagram-v2.png)
+![Alt text](images/cloud-resume-diagram-v3.png)
 
 This repository contains my implementation of the **[Cloud Resume Challenge](https://cloudresumechallenge.dev/instructions/)** by Forrest Brazeal.
 
