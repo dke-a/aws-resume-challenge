@@ -1,6 +1,7 @@
 name: Frontend CI/CD
 
 on:
+  workflow_dispatch:
   push:
     paths:
       - 's3_resume_bucket_files/**'
@@ -20,6 +21,9 @@ jobs:
       - name: Set up Terraform
         uses: hashicorp/setup-terraform@v1
 
+      - name: Update provider versions
+        run: terraform init -upgrade
+        
       - name: Terraform Init
         run: terraform init
 
