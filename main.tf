@@ -98,10 +98,11 @@ module "ddb_resume_table" {
 
 # API Gateway Module Configuration
 module "apigw_resume" {
-  source = "terraform-aws-modules/apigateway-v2/aws"
+  source  = "terraform-aws-modules/apigateway-v2/aws"
+  version = "2.1.0"  # ✅ Use the latest stable version
+
   name   = "visitorCounterAPI"
 
-  # CORS configuration for the API
   cors_configuration = {
     allow_headers = ["'content-type,x-amz-date,authorization,x-api-key,x-amz-security-token'"]
     allow_methods = ["POST", "OPTIONS", "GET"]
@@ -112,9 +113,7 @@ module "apigw_resume" {
   create_default_stage           = false
   create_routes_and_integrations = true
 
-
   integrations = {
-
     "POST /countVisit" = {
       lambda_arn             = aws_lambda_function.lambda_update_count.arn
       connection_type        = "INTERNET"
@@ -130,7 +129,6 @@ module "apigw_resume" {
       payload_format_version = "2.0"
       timeout_milliseconds   = 30000
     }
-
   }
 }
 
