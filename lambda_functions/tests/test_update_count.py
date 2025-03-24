@@ -3,7 +3,7 @@ import os
 
 import boto3
 import pytest
-from moto import mock_dynamodb
+from moto import mock_dynamodb2
 from botocore.exceptions import ClientError
 
 from lambda_functions.update_count.lambda_function import lambda_handler
@@ -20,7 +20,7 @@ def aws_credentials():
 
 @pytest.fixture(scope='function')
 def dynamodb(aws_credentials: None):
-    with mock_dynamodb():
+    with mock_dynamodb2():
         yield boto3.resource('dynamodb', region_name='us-east-1')
 
 @pytest.fixture(scope='function')
