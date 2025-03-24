@@ -93,4 +93,4 @@ def test_lambda_handler_failure(dynamodb_table):
     response = lambda_handler(event, context)
 
     # Check if HTTP status code is 500
-    assert response['status
+    assert response['status'] == 500
