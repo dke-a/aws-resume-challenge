@@ -3,7 +3,7 @@ import os
 
 import boto3
 import pytest
-from moto import mock_dynamodb2
+from moto.dynamodb import mock_dynamodb  # Updated import only
 from botocore.exceptions import ClientError
 
 from lambda_functions.update_count.lambda_function import lambda_handler
@@ -20,7 +20,7 @@ def aws_credentials():
 
 @pytest.fixture(scope='function')
 def dynamodb(aws_credentials: None):
-    with mock_dynamodb2():
+    with mock_dynamodb():  # Updated usage only
         yield boto3.resource('dynamodb', region_name='us-east-1')
 
 @pytest.fixture(scope='function')
@@ -115,5 +115,3 @@ def test_lambda_handler_get_request(dynamodb_table):
 
     # Check if HTTP status code is 405 (Method Not Allowed) or the expected code for GET requests
     assert response['statusCode'] == 405
-    # Optionally, check the response body if it contains a specific message for GET requests
-    # assert response['body'] == "Expected message for GET requests"
