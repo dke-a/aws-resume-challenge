@@ -24,7 +24,9 @@ jobs:
           python-version: '3.x'
 
       - name: Install Python dependencies
-        run: pip install -r requirements.txt
+        run: |
+          pip install -r requirements.txt
+          pip install moto==4.2.12 pytest
 
       - name: Run Python tests
         run: pytest
