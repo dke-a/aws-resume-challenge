@@ -5,115 +5,491 @@
   <title>Don Angeles | Cloud Resume</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta name="description" content="Cloud-focused technologist and aviation leader bridging high-stakes operations with AWS architecture." />
-  <meta property="og:title" content="Don Angeles | Cloud Resume" />
-  <meta property="og:description" content="AWS Solutions Architect Associate and PMI CAPM delivering modern cloud solutions with the discipline of an airline pilot." />
-  <meta property="twitter:card" content="summary_large_image" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Poppins:wght@500;600;700&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="./style.css" />
-  <link rel="stylesheet" href="./index.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --bg: #060D1B;
+      --surface: rgba(255,255,255,0.04);
+      --surface-hover: rgba(255,255,255,0.07);
+      --border: rgba(255,255,255,0.08);
+      --border-hover: rgba(255,255,255,0.18);
+      --primary: #60A5FA;
+      --primary-dim: rgba(96,165,250,0.1);
+      --primary-glow: rgba(96,165,250,0.3);
+      --accent: #A78BFA;
+      --accent-dim: rgba(167,139,250,0.1);
+      --gold: #FBBF24;
+      --gold-dim: rgba(251,191,36,0.1);
+      --green: #34D399;
+      --text: #F1F5F9;
+      --text-secondary: #CBD5E1;
+      --muted: #94A3B8;
+      --subtle: #475569;
+      --font-h: 'Space Grotesk', system-ui, sans-serif;
+      --font-b: 'Inter', system-ui, sans-serif;
+      --font-m: 'JetBrains Mono', monospace;
+      --r-sm: 8px; --r-md: 14px; --r-lg: 20px; --r-xl: 28px;
+      --blur: blur(14px);
+      --nav-h: 68px;
+      --max-w: 1100px;
+      --t: 0.2s ease;
+    }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: var(--font-b);
+      font-size: 16px;
+      line-height: 1.7;
+      color: var(--text);
+      background-color: var(--bg);
+      background-image:
+        radial-gradient(ellipse 70% 50% at 15% 5%, rgba(96,165,250,0.09) 0%, transparent 100%),
+        radial-gradient(ellipse 60% 40% at 85% 90%, rgba(167,139,250,0.07) 0%, transparent 100%);
+      min-height: 100vh;
+      -webkit-font-smoothing: antialiased;
+    }
+    body::before {
+      content: '';
+      position: fixed; inset: 0;
+      background-image:
+        linear-gradient(rgba(255,255,255,0.017) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,0.017) 1px, transparent 1px);
+      background-size: 48px 48px;
+      pointer-events: none; z-index: 0;
+    }
+    h1,h2,h3,h4 { font-family: var(--font-h); font-weight: 600; letter-spacing: -0.02em; line-height: 1.2; }
+    p { color: var(--text-secondary); }
+    a { color: var(--primary); text-decoration: none; transition: color var(--t); }
+    a:hover { color: #93C5FD; }
+    ul { padding-left: 1.25rem; }
+    li { color: var(--text-secondary); margin-bottom: 6px; }
+    li:last-child { margin-bottom: 0; }
+    img { max-width: 100%; height: auto; }
+    :focus-visible { outline: 2px solid var(--primary); outline-offset: 3px; border-radius: 4px; }
+    section[id] { scroll-margin-top: calc(var(--nav-h) + 24px); }
+
+    /* Container */
+    .c { max-width: var(--max-w); margin: 0 auto; padding: 0 32px; position: relative; z-index: 1; }
+
+    /* Glass */
+    .glass {
+      background: var(--surface);
+      backdrop-filter: var(--blur);
+      -webkit-backdrop-filter: var(--blur);
+      border: 1px solid var(--border);
+      transition: border-color var(--t), background var(--t);
+    }
+    .glass:hover { border-color: var(--border-hover); background: var(--surface-hover); }
+
+    /* Navbar */
+    .nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 50;
+      height: var(--nav-h);
+      background: rgba(6,13,27,0.75);
+      backdrop-filter: var(--blur); -webkit-backdrop-filter: var(--blur);
+      border-bottom: 1px solid var(--border);
+    }
+    .nav__inner {
+      max-width: var(--max-w); margin: 0 auto; padding: 0 32px;
+      height: 100%; display: flex; align-items: center; gap: 24px;
+    }
+    .nav__brand {
+      font-family: var(--font-h); font-weight: 700; font-size: 1.1rem;
+      color: var(--text); letter-spacing: -0.03em; white-space: nowrap; flex-shrink: 0;
+    }
+    .nav__brand:hover { color: var(--text); }
+    .nav__links { display: flex; align-items: center; gap: 2px; flex: 1; overflow-x: auto; scrollbar-width: none; }
+    .nav__links::-webkit-scrollbar { display: none; }
+    .nav__link {
+      font-size: 0.85rem; font-weight: 500; color: var(--muted);
+      padding: 6px 11px; border-radius: var(--r-sm); white-space: nowrap;
+      transition: color var(--t), background var(--t); cursor: pointer;
+    }
+    .nav__link:hover, .nav__link.active { color: var(--text); background: var(--surface); }
+
+    /* Hero */
+    .hero {
+      min-height: 100vh; display: flex; align-items: center;
+      padding-top: var(--nav-h); padding-bottom: 80px; position: relative; z-index: 1;
+    }
+    .hero__layout {
+      display: grid; grid-template-columns: 1fr auto;
+      gap: 56px; align-items: center; width: 100%;
+    }
+    .hero__eyebrow {
+      display: inline-flex; align-items: center; gap: 7px;
+      font-size: 0.77rem; font-weight: 600; letter-spacing: 0.12em;
+      text-transform: uppercase; color: var(--primary);
+      background: var(--primary-dim); padding: 5px 13px;
+      border-radius: 999px; border: 1px solid rgba(96,165,250,0.2);
+      margin-bottom: 22px;
+    }
+    .hero__name {
+      font-size: clamp(2.8rem, 5.5vw, 4.5rem); font-weight: 700;
+      letter-spacing: -0.03em; line-height: 1.05; margin-bottom: 14px;
+      background: linear-gradient(135deg, #F1F5F9 0%, #93C5FD 48%, #C4B5FD 100%);
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+    }
+    .hero__role {
+      font-family: var(--font-h); font-size: 1.05rem; font-weight: 500;
+      color: var(--muted); letter-spacing: 0.01em; margin-bottom: 18px;
+    }
+    .hero__tagline {
+      font-size: 1.02rem; line-height: 1.78; color: var(--text-secondary);
+      max-width: 570px; margin-bottom: 28px;
+    }
+    .hero__badges { display: flex; flex-wrap: wrap; gap: 9px; margin-bottom: 28px; }
+    .badge {
+      display: inline-flex; align-items: center; gap: 5px;
+      padding: 4px 11px; border-radius: 999px; font-size: 0.78rem;
+      font-weight: 600; letter-spacing: 0.04em; border: 1px solid;
+    }
+    .badge--aws { color: #FBBF24; background: rgba(251,191,36,0.1); border-color: rgba(251,191,36,0.25); }
+    .badge--pmi { color: #34D399; background: rgba(52,211,153,0.1); border-color: rgba(52,211,153,0.25); }
+    .badge--pilot { color: #60A5FA; background: rgba(96,165,250,0.1); border-color: rgba(96,165,250,0.25); }
+    .hero__links { display: flex; flex-wrap: wrap; gap: 10px; }
+    .sbtn {
+      display: inline-flex; align-items: center; gap: 7px;
+      padding: 9px 16px; border-radius: var(--r-md);
+      font-size: 0.875rem; font-weight: 500;
+      background: var(--surface); border: 1px solid var(--border);
+      color: var(--text-secondary); cursor: pointer;
+      transition: all var(--t);
+    }
+    .sbtn:hover {
+      background: var(--surface-hover); border-color: var(--border-hover);
+      color: var(--text); transform: translateY(-2px);
+    }
+    .sbtn svg { flex-shrink: 0; }
+
+    /* Hero side */
+    .hero__side { display: flex; flex-direction: column; gap: 11px; min-width: 210px; }
+    .scard { border-radius: var(--r-lg); padding: 18px 22px; }
+    .scard__lbl {
+      font-size: 0.72rem; font-weight: 600; text-transform: uppercase;
+      letter-spacing: 0.1em; color: var(--muted); margin-bottom: 5px;
+    }
+    .scard__val { font-family: var(--font-h); font-size: 0.9rem; font-weight: 500; color: var(--text); }
+
+    /* Divider */
+    .div { width: 100%; height: 1px; background: linear-gradient(90deg,transparent,var(--border),transparent); }
+
+    /* Sections */
+    .section { padding: 80px 0; position: relative; z-index: 1; }
+    .sec-hdr { display: flex; align-items: center; gap: 14px; margin-bottom: 36px; }
+    .sec-num { font-size: 0.72rem; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: var(--primary); }
+    .sec-title { font-size: clamp(1.4rem, 2.5vw, 1.9rem); color: var(--text); font-weight: 700; }
+    .sec-line { flex: 1; height: 1px; background: linear-gradient(90deg,var(--border),transparent); }
+
+    /* Summary */
+    .sum-card { border-radius: var(--r-xl); padding: 38px; }
+    .sum-card > p { font-size: 1.02rem; margin-bottom: 18px; }
+    .sum-list { list-style: none; padding: 0; display: flex; flex-direction: column; gap: 10px; }
+    .sum-list li { position: relative; padding-left: 1.4rem; font-size: 0.97rem; }
+    .sum-list li::before {
+      content: ''; position: absolute; left: 0; top: 10px;
+      width: 6px; height: 6px; border-radius: 50%;
+      background: var(--primary); box-shadow: 0 0 8px var(--primary-glow);
+    }
+
+    /* Skills */
+    .skills-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 14px; }
+    .skgrp { border-radius: var(--r-lg); padding: 26px; transition: transform var(--t); }
+    .skgrp:hover { transform: translateY(-3px); }
+    .skgrp__icon {
+      width: 38px; height: 38px; border-radius: var(--r-sm);
+      display: flex; align-items: center; justify-content: center; margin-bottom: 14px;
+    }
+    .skgrp--cloud .skgrp__icon { background: var(--primary-dim); color: var(--primary); }
+    .skgrp--dev .skgrp__icon { background: var(--accent-dim); color: var(--accent); }
+    .skgrp--lead .skgrp__icon { background: var(--gold-dim); color: var(--gold); }
+    .skgrp__title { font-size: 0.97rem; font-weight: 600; color: var(--text); margin-bottom: 12px; }
+    .skgrp ul { list-style: none; padding: 0; }
+    .skgrp li { font-size: 0.875rem; color: var(--muted); margin-bottom: 7px; padding: 0; }
+    .skgrp li::before { display: none; }
+
+    /* Timeline */
+    .timeline { position: relative; padding-left: 44px; }
+    .timeline::before {
+      content: ''; position: absolute; left: 14px; top: 12px; bottom: 0; width: 1px;
+      background: linear-gradient(to bottom, var(--primary), var(--accent), rgba(167,139,250,0.08));
+    }
+    .tl-item { position: relative; padding-bottom: 44px; }
+    .tl-item:last-child { padding-bottom: 0; }
+    .tl-dot {
+      position: absolute; left: -38px; top: 9px;
+      width: 13px; height: 13px; border-radius: 50%;
+      background: var(--primary); border: 2px solid var(--bg);
+      box-shadow: 0 0 0 3px var(--primary-dim), 0 0 14px var(--primary-glow);
+    }
+    .tl-item:nth-child(even) .tl-dot {
+      background: var(--accent);
+      box-shadow: 0 0 0 3px var(--accent-dim), 0 0 14px rgba(167,139,250,0.3);
+    }
+    .tl-card { border-radius: var(--r-lg); padding: 26px; }
+    .tl-hdr { display: flex; flex-wrap: wrap; align-items: flex-start; justify-content: space-between; gap: 8px; margin-bottom: 14px; }
+    .tl-co { font-size: 0.77rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.08em; color: var(--primary); margin-bottom: 3px; }
+    .tl-item:nth-child(even) .tl-co { color: var(--accent); }
+    .tl-role { font-size: 1.05rem; font-weight: 600; color: var(--text); }
+    .tl-meta {
+      font-size: 0.82rem; color: var(--muted);
+      background: var(--surface); padding: 3px 11px;
+      border-radius: 999px; border: 1px solid var(--border); white-space: nowrap; flex-shrink: 0;
+    }
+    .tl-body ul { list-style: none; padding: 0; }
+    .tl-body li { position: relative; padding-left: 1.25rem; font-size: 0.9rem; margin-bottom: 9px; }
+    .tl-body li::before { content: '→'; position: absolute; left: 0; color: var(--primary); font-size: 0.78rem; top: 3px; }
+    .tl-item:nth-child(even) .tl-body li::before { color: var(--accent); }
+
+    /* Education */
+    .edu-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 14px; }
+    .edu-card { border-radius: var(--r-lg); padding: 26px; transition: transform var(--t); }
+    .edu-card:hover { transform: translateY(-3px); }
+    .edu-deg { font-size: 0.97rem; font-weight: 600; color: var(--text); margin-bottom: 5px; line-height: 1.4; }
+    .edu-school { font-size: 0.85rem; color: var(--primary); margin-bottom: 9px; }
+    .edu-notes { font-size: 0.82rem; color: var(--muted); }
+
+    /* Projects */
+    .proj-grid { display: grid; grid-template-columns: repeat(2,1fr); gap: 14px; }
+    .proj-card { border-radius: var(--r-lg); padding: 26px; transition: transform var(--t), border-color var(--t); }
+    .proj-card:hover { transform: translateY(-3px); border-color: rgba(96,165,250,0.25); }
+    .proj-card--feat {
+      grid-column: span 2;
+      background: linear-gradient(135deg, rgba(96,165,250,0.06), rgba(167,139,250,0.04));
+    }
+    .proj-tag { display: inline-flex; font-size: 0.72rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; color: var(--primary); margin-bottom: 10px; }
+    .proj-title { font-size: 1.02rem; font-weight: 600; color: var(--text); margin-bottom: 5px; }
+    .proj-meta { font-size: 0.82rem; color: var(--muted); margin-bottom: 13px; }
+    .proj-card ul { list-style: none; padding: 0; }
+    .proj-card li { position: relative; padding-left: 1.2rem; font-size: 0.875rem; margin-bottom: 7px; }
+    .proj-card li::before { content: '→'; position: absolute; left: 0; color: var(--primary); font-size: 0.77rem; top: 2px; }
+    .proj-link {
+      display: inline-flex; align-items: center; gap: 5px;
+      margin-top: 13px; font-size: 0.85rem; font-weight: 500; color: var(--primary);
+    }
+    .proj-link:hover { color: #93C5FD; }
+
+    /* Certifications */
+    .cert-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 14px; }
+    .cert-card {
+      border-radius: var(--r-lg); padding: 28px;
+      display: flex; flex-direction: column; align-items: center;
+      text-align: center; transition: transform var(--t);
+    }
+    .cert-card:hover { transform: translateY(-4px); }
+    .cert-logo {
+      width: 76px; height: 76px; object-fit: contain; margin-bottom: 14px;
+      filter: drop-shadow(0 0 12px rgba(96,165,250,0.2));
+    }
+    .cert-name { font-size: 0.92rem; font-weight: 600; color: var(--text); margin-bottom: 7px; line-height: 1.4; }
+    .cert-id { font-family: var(--font-m); font-size: 0.67rem; color: var(--subtle); margin-bottom: 13px; }
+    .cert-link {
+      display: inline-flex; align-items: center; gap: 5px; font-size: 0.78rem;
+      font-weight: 500; color: var(--primary); padding: 4px 11px;
+      border: 1px solid rgba(96,165,250,0.25); border-radius: 999px; transition: all var(--t);
+    }
+    .cert-link:hover { background: var(--primary-dim); color: #93C5FD; }
+
+    /* Continuing Ed */
+    .cont-grid { display: grid; grid-template-columns: repeat(2,1fr); gap: 14px; }
+    .cont-card { border-radius: var(--r-lg); padding: 26px; }
+    .cont-cat { font-size: 0.72rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: var(--accent); margin-bottom: 5px; }
+    .cont-title { font-size: 0.97rem; font-weight: 600; color: var(--text); margin-bottom: 13px; }
+    .cont-card ul { list-style: none; padding: 0; }
+    .cont-card li { font-size: 0.875rem; color: var(--muted); margin-bottom: 7px; }
+
+    /* Footer */
+    footer { padding: 44px 0; border-top: 1px solid var(--border); position: relative; z-index: 1; }
+    .foot-inner { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 20px; }
+    .foot-brand { font-family: var(--font-h); font-weight: 700; color: var(--text); }
+    .foot-stack { display: flex; flex-wrap: wrap; gap: 7px; align-items: center; }
+    .tpill {
+      font-size: 0.72rem; font-weight: 500; color: var(--muted);
+      background: var(--surface); border: 1px solid var(--border);
+      padding: 3px 9px; border-radius: 999px;
+    }
+    .foot-copy { font-size: 0.78rem; color: var(--subtle); }
+
+    /* Fade-in animation */
+    .fade-up { opacity: 0; transform: translateY(18px); transition: opacity 0.5s ease, transform 0.5s ease; }
+    .fade-up.visible { opacity: 1; transform: translateY(0); }
+
+    /* Scrollbar */
+    ::-webkit-scrollbar { width: 5px; }
+    ::-webkit-scrollbar-track { background: var(--bg); }
+    ::-webkit-scrollbar-thumb { background: var(--subtle); border-radius: 3px; }
+
+    /* Responsive */
+    @media (max-width: 1024px) {
+      .hero__layout { grid-template-columns: 1fr; }
+      .hero__side { display: none; }
+      .skills-grid { grid-template-columns: repeat(2,1fr); }
+      .edu-grid { grid-template-columns: repeat(2,1fr); }
+      .cert-grid { grid-template-columns: repeat(2,1fr); }
+    }
+    @media (max-width: 768px) {
+      .c { padding: 0 20px; }
+      .section { padding: 60px 0; }
+      .nav__inner { padding: 0 20px; gap: 14px; }
+      .skills-grid, .edu-grid, .proj-grid, .cert-grid, .cont-grid { grid-template-columns: 1fr; }
+      .proj-card--feat { grid-column: span 1; }
+      .hero { padding-top: calc(var(--nav-h) + 20px); }
+      .hero__name { font-size: clamp(2.4rem, 8vw, 3.5rem); }
+      .sum-card { padding: 24px 20px; }
+      .timeline { padding-left: 30px; }
+      .tl-dot { left: -26px; }
+    }
+    @media (max-width: 480px) {
+      .sbtn span { display: none; }
+      .edu-grid { grid-template-columns: 1fr; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      html { scroll-behavior: auto; }
+      *, *::before, *::after { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
+      .fade-up { opacity: 1; transform: none; transition: none; }
+    }
+  </style>
 </head>
 <body>
-  <div class="page-shell">
-    <header class="site-header">
-      <div class="site-header__top">
-        <div class="site-header__identity">
-          <span class="pill">Cloud Resume</span>
-          <h1 class="site-header__name">Don Kristopher Angeles</h1>
-          <p class="site-header__title">AWS Solutions Architect Associate · PMI CAPM</p>
-          <p class="site-header__summary">
-            Cloud-focused technologist and former airline pilot blending disciplined flight-deck execution with modern AWS architecture.
-            I design resilient, secure, and observable serverless platforms that scale from proof-of-concept to production.
+
+  <!-- NAVBAR -->
+  <nav class="nav" role="navigation" aria-label="Main navigation">
+    <div class="nav__inner">
+      <a href="#top" class="nav__brand">Don Angeles</a>
+      <div class="nav__links">
+        <a href="#summary" class="nav__link">Summary</a>
+        <a href="#skills" class="nav__link">Skills</a>
+        <a href="#experience" class="nav__link">Experience</a>
+        <a href="#education" class="nav__link">Education</a>
+        <a href="#projects" class="nav__link">Projects</a>
+        <a href="#certifications" class="nav__link">Certifications</a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- HERO -->
+  <section id="top" class="hero" aria-label="Introduction">
+    <div class="c">
+      <div class="hero__layout">
+        <div class="hero__content">
+          <p class="hero__eyebrow">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M17.5 19H9a7 7 0 1 1 6.71-9h1.79a4.5 4.5 0 1 1 0 9Z"/></svg>
+            Cloud Resume
           </p>
+          <h1 class="hero__name">Don Angeles</h1>
+          <p class="hero__role">Senior Technical Support Engineer · AWS Solutions Architect</p>
+          <p class="hero__tagline">
+            From flight deck to cloud deck — engineering resilient serverless platforms on AWS with the precision of 2,000+ flight hours and the rigour of high-stakes operations.
+          </p>
+          <div class="hero__badges" role="list" aria-label="Credentials">
+            <span class="badge badge--aws" role="listitem">AWS SAA</span>
+            <span class="badge badge--aws" role="listitem">AWS CCP</span>
+            <span class="badge badge--pmi" role="listitem">PMI CAPM</span>
+            <span class="badge badge--pilot" role="listitem">
+              <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M17.8 19.2 16 11l3.5-3.5C21 6 21 4 19 4s-2 2-3.5 3.5L7 6 3.5 9.5l8 1.5L9 14l-3-.5-1 1 4 2 2 4 1-1-.5-3 3.5-2 1.5 8 3.5-3.5Z"/></svg>
+              2,000+ Flight Hours
+            </span>
+          </div>
+          <div class="hero__links" role="list" aria-label="Links">
+            <a href="https://www.linkedin.com/in/donangeles/" target="_blank" rel="noreferrer noopener" class="sbtn" role="listitem">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 0 1-2.063-2.065 2.064 2.064 0 1 1 2.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+              <span>LinkedIn</span>
+            </a>
+            <a href="https://github.com/dke-a" target="_blank" rel="noreferrer noopener" class="sbtn" role="listitem">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/></svg>
+              <span>GitHub</span>
+            </a>
+            <a href="https://dkloud.hashnode.dev/" target="_blank" rel="noreferrer noopener" class="sbtn" role="listitem">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4 12.5-12.5z"/></svg>
+              <span>Blog</span>
+            </a>
+            <a href="https://9drbe81ae7.execute-api.us-east-1.amazonaws.com/countVisit" target="_blank" rel="noreferrer noopener" class="sbtn" role="listitem">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
+              <span>API</span>
+            </a>
+          </div>
         </div>
-        <nav class="primary-nav" aria-label="Primary navigation">
-          <a href="#summary">Summary</a>
-          <a href="#skills">Skills</a>
-          <a href="#work-experience">Experience</a>
-          <a href="#education">Education</a>
-          <a href="#leadership">Leadership</a>
-          <a href="#learning">Continuing Education</a>
-          <a href="#certifications">Certifications</a>
-        </nav>
-      </div>
-      <div class="contact-grid">
-        <div class="contact-card">
-          <span>LinkedIn</span>
-          <a href="https://www.linkedin.com/in/donangeles/" target="_blank" rel="noreferrer noopener">
-            linkedin.com/in/donangeles
-          </a>
-        </div>
-        <div class="contact-card">
-          <span>GitHub</span>
-          <a href="https://github.com/dke-a" target="_blank" rel="noreferrer noopener">
-            github.com/dke-a
-          </a>
-        </div>
-        <div class="contact-card">
-          <span>Technical Writing</span>
-          <a href="https://dkloud.hashnode.dev/" target="_blank" rel="noreferrer noopener">
-            dkloud.hashnode.dev
-          </a>
-        </div>
-        <div class="contact-card">
-          <span>Visitor Counter API</span>
-          <a href="https://9drbe81ae7.execute-api.us-east-1.amazonaws.com/countVisit" target="_blank" rel="noreferrer noopener">
-            Invoke endpoint
-          </a>
-        </div>
-      </div>
-      <div class="meta-strip" role="list">
-        <div class="meta-strip__item" role="listitem">
-          <strong>Site Visits</strong>
-          <span id="visits">--</span>
-        </div>
-        <div class="meta-strip__item" role="listitem">
-          <strong>Focus</strong>
-          <span>Serverless AWS · Automation · Observability</span>
-        </div>
-        <div class="meta-strip__item" role="listitem">
-          <strong>Strengths</strong>
-          <span>High-stakes decision making · Cross-functional leadership</span>
-        </div>
-      </div>
-    </header>
 
-    <main class="main-content">
-      <section id="summary" class="section-card">
-        <h2>Summary</h2>
-        <p>
-          Senior technical support engineer and builder who merges flight-deck discipline with cloud operations to keep modern SaaS and blockchain platforms efficient and dependable.
-          I reduce friction across customers, engineers, and stakeholders by pairing hands-on troubleshooting with infrastructure-as-code and observability practices.
-        </p>
-        <ul>
-          <li>Resolve complex production incidents spanning APIs, data pipelines, and integrations while maintaining top-quartile customer satisfaction.</li>
-          <li>Design modern AWS architectures with Terraform, Lambda, API Gateway, CloudFront, and DynamoDB, and automate their delivery via GitHub Actions.</li>
-          <li>Author knowledge bases, technical blogs, and documentation that upskill teams and shrink future ticket volume.</li>
-        </ul>
-      </section>
+        <div class="hero__side" aria-label="Quick stats">
+          <div class="scard glass">
+            <div class="scard__lbl">Focus</div>
+            <div class="scard__val">Serverless AWS · Automation · Observability</div>
+          </div>
+          <div class="scard glass">
+            <div class="scard__lbl">Strengths</div>
+            <div class="scard__val">High-stakes decisions · Cross-functional leadership</div>
+          </div>
+          <div class="scard glass">
+            <div class="scard__lbl">Current Role</div>
+            <div class="scard__val">Sr. Technical Support Engineer @ Fireblocks</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
 
-      <section id="skills" class="section-card">
-        <h2>Skills &amp; Tools</h2>
-        <div class="skills-wrapper">
-          <div class="skill-card">
-            <h3>Cloud &amp; DevOps</h3>
+  <div class="div"></div>
+
+  <main>
+    <!-- SUMMARY -->
+    <section id="summary" class="section">
+      <div class="c">
+        <div class="sec-hdr fade-up">
+          <span class="sec-num">01</span>
+          <h2 class="sec-title">Summary</h2>
+          <div class="sec-line" aria-hidden="true"></div>
+        </div>
+        <div class="sum-card glass fade-up">
+          <p>Senior technical support engineer and builder who merges flight-deck discipline with cloud operations to keep modern SaaS and blockchain platforms efficient and dependable. I reduce friction across customers, engineers, and stakeholders by pairing hands-on troubleshooting with infrastructure-as-code and observability practices.</p>
+          <ul class="sum-list" role="list">
+            <li>Resolve complex production incidents spanning APIs, data pipelines, and integrations while maintaining top-quartile customer satisfaction.</li>
+            <li>Design modern AWS architectures with Terraform, Lambda, API Gateway, CloudFront, and DynamoDB, and automate their delivery via GitHub Actions.</li>
+            <li>Author knowledge bases, technical blogs, and documentation that upskill teams and shrink future ticket volume.</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <div class="div"></div>
+
+    <!-- SKILLS -->
+    <section id="skills" class="section">
+      <div class="c">
+        <div class="sec-hdr fade-up">
+          <span class="sec-num">02</span>
+          <h2 class="sec-title">Skills &amp; Tools</h2>
+          <div class="sec-line" aria-hidden="true"></div>
+        </div>
+        <div class="skills-grid fade-up">
+          <div class="skgrp glass skgrp--cloud">
+            <div class="skgrp__icon" aria-hidden="true">
+              <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17.5 19H9a7 7 0 1 1 6.71-9h1.79a4.5 4.5 0 1 1 0 9Z"/></svg>
+            </div>
+            <h3 class="skgrp__title">Cloud &amp; DevOps</h3>
             <ul>
               <li>AWS: Lambda, API Gateway, CloudFront, DynamoDB, S3, Route 53, CloudWatch</li>
               <li>Terraform modules, remote state, automated deployments</li>
               <li>GitHub Actions, IaC drift detection, CloudFront invalidations</li>
             </ul>
           </div>
-          <div class="skill-card">
-            <h3>Development</h3>
+          <div class="skgrp glass skgrp--dev">
+            <div class="skgrp__icon" aria-hidden="true">
+              <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
+            </div>
+            <h3 class="skgrp__title">Development</h3>
             <ul>
               <li>Python, JavaScript, HTML/CSS, REST API design</li>
               <li>pytest, moto, requests, boto3</li>
               <li>Linux, shell scripting, relational modeling fundamentals</li>
             </ul>
           </div>
-          <div class="skill-card">
-            <h3>Leadership &amp; Delivery</h3>
+          <div class="skgrp glass skgrp--lead">
+            <div class="skgrp__icon" aria-hidden="true">
+              <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+            </div>
+            <h3 class="skgrp__title">Leadership &amp; Delivery</h3>
             <ul>
               <li>Operational risk mitigation and incident response</li>
               <li>Stakeholder facilitation, client advisory, executive reporting</li>
@@ -121,259 +497,329 @@
             </ul>
           </div>
         </div>
-      </section>
+      </div>
+    </section>
 
-      <section id="work-experience" class="section-card">
-        <h2>Work Experience</h2>
-        <div class="detail-grid">
-          <div class="detail-grid__row">
-            <div class="detail-grid__header">
-              <h3>Fireblocks · Senior Technical Support Engineer</h3>
-              <span class="detail-grid__meta">Remote / Brooklyn · Fintech SaaS</span>
-            </div>
-            <div class="detail-grid__body">
-              <ul>
-                <li>Promoted to senior within high-growth blockchain operations after consistently resolving 52% more customer cases than the team average while maintaining a 4.9 / 5 CSAT.</li>
+    <div class="div"></div>
+
+    <!-- EXPERIENCE -->
+    <section id="experience" class="section">
+      <div class="c">
+        <div class="sec-hdr fade-up">
+          <span class="sec-num">03</span>
+          <h2 class="sec-title">Work Experience</h2>
+          <div class="sec-line" aria-hidden="true"></div>
+        </div>
+        <div class="timeline fade-up" role="list">
+
+          <div class="tl-item" role="listitem">
+            <div class="tl-dot" aria-hidden="true"></div>
+            <div class="tl-card glass">
+              <div class="tl-hdr">
+                <div><p class="tl-co">Fireblocks · Fintech SaaS</p><h3 class="tl-role">Senior Technical Support Engineer</h3></div>
+                <span class="tl-meta">Remote / Brooklyn</span>
+              </div>
+              <div class="tl-body"><ul>
+                <li>Promoted to senior after consistently resolving 52% more customer cases than the team average while maintaining a 4.9 / 5 CSAT.</li>
                 <li>Diagnose complex blockchain platform issues across APIs, transaction workflows, and data mismatches using SQL, Python, and deep log analysis.</li>
                 <li>Partner with Product, Engineering, and DevOps to triage, escalate, and eliminate critical incidents, producing internal runbooks that curb repeat tickets.</li>
-                <li>Deliver clear, real-time communication via Slack, email, and live troubleshooting sessions to educate customers on security and operational best practices.</li>
-              </ul>
+                <li>Deliver real-time communication via Slack, email, and live troubleshooting sessions to educate customers on security and operational best practices.</li>
+              </ul></div>
             </div>
           </div>
 
-          <div class="detail-grid__row">
-            <div class="detail-grid__header">
-              <h3>Crystalize.dev · Operations &amp; Research Intern (Volunteer)</h3>
-              <span class="detail-grid__meta">Remote · Community talent platform</span>
-            </div>
-            <div class="detail-grid__body">
-              <ul>
+          <div class="tl-item" role="listitem">
+            <div class="tl-dot" aria-hidden="true"></div>
+            <div class="tl-card glass">
+              <div class="tl-hdr">
+                <div><p class="tl-co">Crystalize.dev · Community Platform</p><h3 class="tl-role">Operations &amp; Research Intern (Volunteer)</h3></div>
+                <span class="tl-meta">Remote</span>
+              </div>
+              <div class="tl-body"><ul>
                 <li>Built an internal job board workflow that scraped listings, stored structured records in Bubble through API calls, and surfaced curated roles on the public site.</li>
-                <li>Consolidated and cleaned more than 2,500 rows of multi-source data with Python and Google Sheets to support sponsorship outreach and keep stakeholder dashboards accurate.</li>
+                <li>Consolidated and cleaned more than 2,500 rows of multi-source data with Python and Google Sheets to support sponsorship outreach and keep dashboards accurate.</li>
                 <li>Generated demographic insights for leadership using Tableau visualizations and Python statistical analysis to inform program design.</li>
-              </ul>
+              </ul></div>
             </div>
           </div>
 
-          <div class="detail-grid__row">
-            <div class="detail-grid__header">
-              <h3>Philippine Airlines · Airline Pilot</h3>
-              <span class="detail-grid__meta">2,000+ flight hours · Best in Flying award</span>
-            </div>
-            <div class="detail-grid__body">
-              <ul>
-                <li>Delivered operational excellence and safety across every sortie, helping sustain an 80% on-time performance record by executing with precision inside heavily regulated environments.</li>
-                <li>Led critical responses—including in-flight diversions and medical events—through structured planning, decisive communication, and high-tempo crew coordination.</li>
-                <li>Recognized with the “Best in Flying” award for top-tier proficiency, situational awareness, and leadership under pressure.</li>
-              </ul>
-            </div>
-          </div>
-
-          <div class="detail-grid__row">
-            <div class="detail-grid__header">
-              <h3>Sun Life of Canada (Philippines) · Financial Advisor</h3>
-              <span class="detail-grid__meta">Client advisory · Holistic financial planning</span>
-            </div>
-            <div class="detail-grid__body">
-              <ul>
-                <li>Advocated holistic financial wellness, uniting deep product expertise with empathy-driven discovery to craft tailored plans for every client household.</li>
-                <li>Owned the end-to-end sales lifecycle—from prospecting and presentations to objection handling and policy fulfillment—maintaining transparent communication at every step.</li>
-                <li>Earned near-unanimous positive feedback for clarity, follow-through, and the ability to translate complex financial instruments into actionable decisions.</li>
-              </ul>
+          <div class="tl-item" role="listitem">
+            <div class="tl-dot" aria-hidden="true"></div>
+            <div class="tl-card glass">
+              <div class="tl-hdr">
+                <div><p class="tl-co">Philippine Airlines</p><h3 class="tl-role">Airline Pilot</h3></div>
+                <span class="tl-meta">2,000+ flight hours · Best in Flying</span>
+              </div>
+              <div class="tl-body"><ul>
+                <li>Delivered operational excellence and safety across every sortie, sustaining 80% on-time performance in a heavily regulated environment.</li>
+                <li>Led critical responses — in-flight diversions and medical events — through structured planning, decisive communication, and crew coordination.</li>
+                <li>Recognized with the "Best in Flying" award for top-tier proficiency, situational awareness, and leadership under pressure.</li>
+              </ul></div>
             </div>
           </div>
 
-          <div class="detail-grid__row">
-            <div class="detail-grid__header">
-              <h3>PLDT · Core &amp; Transport Network Projects Intern</h3>
-              <span class="detail-grid__meta">Software delivery · Stakeholder collaboration</span>
+          <div class="tl-item" role="listitem">
+            <div class="tl-dot" aria-hidden="true"></div>
+            <div class="tl-card glass">
+              <div class="tl-hdr">
+                <div><p class="tl-co">Sun Life of Canada (Philippines)</p><h3 class="tl-role">Financial Advisor</h3></div>
+                <span class="tl-meta">Client advisory · Financial planning</span>
+              </div>
+              <div class="tl-body"><ul>
+                <li>Crafted tailored financial plans by uniting deep product expertise with empathy-driven discovery for every client household.</li>
+                <li>Owned the end-to-end sales lifecycle — prospecting to policy fulfillment — maintaining transparent communication at every step.</li>
+                <li>Earned near-unanimous positive feedback for clarity, follow-through, and translating complex instruments into actionable decisions.</li>
+              </ul></div>
             </div>
-            <div class="detail-grid__body">
-              <ul>
-                <li>Developed an intranet project management system with JSP, HTML, CSS, and JavaScript, partnering with the program lead to document and deliver production-ready software.</li>
+          </div>
+
+          <div class="tl-item" role="listitem">
+            <div class="tl-dot" aria-hidden="true"></div>
+            <div class="tl-card glass">
+              <div class="tl-hdr">
+                <div><p class="tl-co">PLDT · Telecom</p><h3 class="tl-role">Core &amp; Transport Network Projects Intern</h3></div>
+                <span class="tl-meta">Software delivery · Stakeholder collaboration</span>
+              </div>
+              <div class="tl-body"><ul>
+                <li>Developed an intranet project management system with JSP, HTML, CSS, and JavaScript, delivering production-ready software.</li>
                 <li>Conducted discovery workshops, translated requirements into full-stack features, and presented iterative releases to leadership.</li>
-                <li>Selected as one of 40 participants in the nationwide Student Camp internship from a pool of 220 invitees for combined academic merit and leadership potential.</li>
-              </ul>
+                <li>Selected as 1 of 40 participants from 220 invitees in the nationwide Student Camp internship for combined academic merit and leadership.</li>
+              </ul></div>
             </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <div class="div"></div>
+
+    <!-- EDUCATION -->
+    <section id="education" class="section">
+      <div class="c">
+        <div class="sec-hdr fade-up">
+          <span class="sec-num">04</span>
+          <h2 class="sec-title">Education</h2>
+          <div class="sec-line" aria-hidden="true"></div>
+        </div>
+        <div class="edu-grid fade-up">
+          <div class="edu-card glass">
+            <p class="edu-deg">MS in Information Systems</p>
+            <p class="edu-school">Baruch College – Zicklin School of Business</p>
+            <p class="edu-notes">Graduate focus on data-driven strategy, analytics, and enterprise platforms.</p>
+          </div>
+          <div class="edu-card glass">
+            <p class="edu-deg">BS in Computer Science (Network Engineering)</p>
+            <p class="edu-school">De La Salle University</p>
+            <p class="edu-notes">Student Leadership Award · Academic Honorable Mention</p>
+          </div>
+          <div class="edu-card glass">
+            <p class="edu-deg">Ab-Initio Pilot Training Program</p>
+            <p class="edu-school">Philippine Airlines Aviation School</p>
+            <p class="edu-notes">Flying Proficiency Award (Best in Flying) · Class Marcher</p>
           </div>
         </div>
-      </section>
+      </div>
+    </section>
 
-      <section id="education" class="section-card">
-        <h2>Education</h2>
-        <div class="detail-grid">
-          <div class="detail-grid__row">
-            <div class="detail-grid__header">
-              <h3>MS in Information Systems</h3>
-              <span class="detail-grid__meta">Baruch College – Zicklin School of Business</span>
-            </div>
-            <div class="detail-grid__body">
-              <p>Graduate focus on data-driven strategy, analytics, and enterprise platforms.</p>
-            </div>
-          </div>
+    <div class="div"></div>
 
-          <div class="detail-grid__row">
-            <div class="detail-grid__header">
-              <h3>BS in Computer Science (Network Engineering)</h3>
-              <span class="detail-grid__meta">De La Salle University</span>
-            </div>
-            <div class="detail-grid__body">
-              <p>Student Leadership Award · Academic Honorable Mention.</p>
-            </div>
-          </div>
-
-          <div class="detail-grid__row">
-            <div class="detail-grid__header">
-              <h3>AB-Initio Pilot Training Program</h3>
-              <span class="detail-grid__meta">Philippine Airlines Aviation School</span>
-            </div>
-            <div class="detail-grid__body">
-              <p>Flying Proficiency Award (Best in Flying) · Class Marcher recognition.</p>
-            </div>
-          </div>
+    <!-- PROJECTS / LEADERSHIP -->
+    <section id="projects" class="section">
+      <div class="c">
+        <div class="sec-hdr fade-up">
+          <span class="sec-num">05</span>
+          <h2 class="sec-title">Leadership &amp; Projects</h2>
+          <div class="sec-line" aria-hidden="true"></div>
         </div>
-      </section>
+        <div class="proj-grid fade-up">
 
-      <section id="leadership" class="section-card">
-        <h2>Leadership &amp; Project Experience</h2>
-        <div class="detail-grid">
-          <div class="detail-grid__row">
-            <div class="detail-grid__header">
-              <h3>Cloud Resume Challenge · AWS Project</h3>
-              <span class="detail-grid__meta">
-                <a href="https://dkloud.hashnode.dev/aws-resume-challenge" target="_blank" rel="noreferrer noopener">Read the build log ⇱</a>
-              </span>
-            </div>
-            <div class="detail-grid__body">
-              <ul>
-                <li>Built a production-ready resume platform with an S3 static site, CloudFront distribution, HTTPS via Route 53, and a serverless visitor counter powered by Lambda, API Gateway, and DynamoDB.</li>
-                <li>Codified every component in Terraform and wired GitHub Actions pipelines to test Python functions, roll out infrastructure changes, and invalidate CloudFront caches on deploy.</li>
-              </ul>
-            </div>
-          </div>
-
-          <div class="detail-grid__row">
-            <div class="detail-grid__header">
-              <h3>Student Government · President</h3>
-              <span class="detail-grid__meta">De La Salle University</span>
-            </div>
-            <div class="detail-grid__body">
-              <ul>
-                <li>Led a 30-person team to deliver 44+ programs spanning professional development, outreach, advocacy, and campus-wide campaigns.</li>
-                <li>Raised ₱250,000 in 48 hours through a Centennial celebration initiative, funding scholarships and community projects.</li>
-                <li>Forged partnerships with HP and the Black Pencil Project to deliver learning resources and skills workshops to underserved communities.</li>
-              </ul>
-            </div>
-          </div>
-
-          <div class="detail-grid__row">
-            <div class="detail-grid__header">
-              <h3>Automated Malware Detection for Android · Team Lead</h3>
-              <span class="detail-grid__meta">SDIWC International Conference, Kuala Lumpur</span>
-            </div>
-            <div class="detail-grid__body">
-              <ul>
-                <li>Directed the end-to-end design of a machine-learning pipeline using Python, Linux, and Weka to achieve ~75% malware classification accuracy.</li>
-                <li>Coordinated research, experimentation, and technical integration across a multi-disciplinary team, delivering a publishable prototype.</li>
-              </ul>
-            </div>
-          </div>
-
-          <div class="detail-grid__row">
-            <div class="detail-grid__header">
-              <h3>Achiever Scholar Program · College Head</h3>
-              <span class="detail-grid__meta">De La Salle University</span>
-            </div>
-            <div class="detail-grid__body">
-              <ul>
-                <li>Organized university-wide fundraising to sponsor tuition assistance for computer studies scholars each academic term.</li>
-                <li>Built cross-campus volunteer networks, sustaining scholarship support through blended on-campus and digital campaigns.</li>
-              </ul>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <section id="learning" class="section-card">
-        <h2>Continuing Education</h2>
-        <div class="detail-grid">
-          <div class="detail-grid__row">
-            <div class="detail-grid__header">
-              <h3>Amazon Web Services</h3>
-              <span class="detail-grid__meta">Cloud-native architecture &amp; design</span>
-            </div>
-            <div class="detail-grid__body">
-              <ul>
-                <li>AWS Certified Solutions Architect – Associate (SAA-C03) · Cantrill.io</li>
-                <li>Cloud Practitioner Essentials · AWS Training</li>
-              </ul>
-            </div>
-          </div>
-
-          <div class="detail-grid__row">
-            <div class="detail-grid__header">
-              <h3>Project Management</h3>
-              <span class="detail-grid__meta">Delivery frameworks &amp; stakeholder management</span>
-            </div>
-            <div class="detail-grid__body">
-              <ul>
-                <li>Google Project Management Specialization · Coursera</li>
-                <li>Project Management Fundamentals &amp; PMP Prep · LinkedIn Learning</li>
-              </ul>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <section id="certifications" class="section-card">
-        <h2>Certifications</h2>
-        <div class="cert-list">
-          <div class="cert-item">
-            <h3>AWS Certified Solutions Architect – Associate</h3>
-            <a href="https://www.credly.com/badges/262482be-00b4-422e-89b1-47cd3bb1af51" target="_blank" rel="noreferrer noopener">
-              Verify credential · ID ESWWJDZ10JQ1QD9X
+          <div class="proj-card glass proj-card--feat">
+            <p class="proj-tag">Featured Project</p>
+            <h3 class="proj-title">Cloud Resume Challenge · AWS</h3>
+            <p class="proj-meta">S3 · CloudFront · Route 53 · Lambda · API Gateway · DynamoDB · Terraform · GitHub Actions</p>
+            <ul>
+              <li>Built a production-ready resume platform with an S3 static site, CloudFront distribution, HTTPS via Route 53, and a serverless visitor counter powered by Lambda, API Gateway, and DynamoDB.</li>
+              <li>Codified every component in Terraform and wired GitHub Actions pipelines to test Python functions, roll out infrastructure changes, and invalidate CloudFront caches on deploy.</li>
+            </ul>
+            <a href="https://dkloud.hashnode.dev/aws-resume-challenge" target="_blank" rel="noreferrer noopener" class="proj-link">
+              Read the build log
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
             </a>
           </div>
-          <div class="cert-item">
-            <h3>PMI Certified Associate in Project Management (CAPM)</h3>
-            <a href="https://www.credly.com/badges/262482be-00b4-422e-89b1-47cd3bb1af51" target="_blank" rel="noreferrer noopener">
-              Verify credential · ID 2928764
+
+          <div class="proj-card glass">
+            <p class="proj-tag">Leadership</p>
+            <h3 class="proj-title">Student Government · President</h3>
+            <p class="proj-meta">De La Salle University</p>
+            <ul>
+              <li>Led a 30-person team to deliver 44+ programs spanning professional development, outreach, and campus-wide campaigns.</li>
+              <li>Raised ₱250,000 in 48 hours through a Centennial celebration initiative funding scholarships and community projects.</li>
+              <li>Forged partnerships with HP and the Black Pencil Project to deliver skills workshops to underserved communities.</li>
+            </ul>
+          </div>
+
+          <div class="proj-card glass">
+            <p class="proj-tag">Research</p>
+            <h3 class="proj-title">Automated Malware Detection for Android</h3>
+            <p class="proj-meta">SDIWC International Conference, Kuala Lumpur · Team Lead</p>
+            <ul>
+              <li>Directed an ML pipeline using Python, Linux, and Weka to achieve ~75% malware classification accuracy.</li>
+              <li>Coordinated research, experimentation, and technical integration across a multi-disciplinary team, delivering a publishable prototype.</li>
+            </ul>
+          </div>
+
+          <div class="proj-card glass">
+            <p class="proj-tag">Leadership</p>
+            <h3 class="proj-title">Achiever Scholar Program · College Head</h3>
+            <p class="proj-meta">De La Salle University</p>
+            <ul>
+              <li>Organized university-wide fundraising to sponsor tuition assistance for computer studies scholars each academic term.</li>
+              <li>Built cross-campus volunteer networks sustaining scholarship support through blended on-campus and digital campaigns.</li>
+            </ul>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <div class="div"></div>
+
+    <!-- CERTIFICATIONS -->
+    <section id="certifications" class="section">
+      <div class="c">
+        <div class="sec-hdr fade-up">
+          <span class="sec-num">06</span>
+          <h2 class="sec-title">Certifications</h2>
+          <div class="sec-line" aria-hidden="true"></div>
+        </div>
+        <div class="cert-grid fade-up">
+          <div class="cert-card glass">
+            <img src="./public/aws-saa-removebg-preview-200h.png" alt="AWS Certified Solutions Architect Associate badge" class="cert-logo" loading="lazy" />
+            <p class="cert-name">AWS Certified Solutions Architect – Associate</p>
+            <p class="cert-id">ID: ESWWJDZ10JQ1QD9X</p>
+            <a href="https://www.credly.com/badges/262482be-00b4-422e-89b1-47cd3bb1af51" target="_blank" rel="noreferrer noopener" class="cert-link">
+              Verify credential
+              <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
             </a>
           </div>
-          <div class="cert-item">
-            <h3>AWS Certified Cloud Practitioner</h3>
-            <a href="https://www.credly.com/badges/262482be-00b4-422e-89b1-47cd3bb1af51" target="_blank" rel="noreferrer noopener">
-              Verify credential · ID 1214D3JC6NEEQLGJ
+          <div class="cert-card glass">
+            <img src="./public/capm-200h.png" alt="PMI CAPM badge" class="cert-logo" loading="lazy" />
+            <p class="cert-name">PMI Certified Associate in Project Management (CAPM)</p>
+            <p class="cert-id">ID: 2928764</p>
+            <a href="https://www.credly.com/badges/262482be-00b4-422e-89b1-47cd3bb1af51" target="_blank" rel="noreferrer noopener" class="cert-link">
+              Verify credential
+              <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+            </a>
+          </div>
+          <div class="cert-card glass">
+            <img src="./public/aws-cp-logo-200h.png" alt="AWS Certified Cloud Practitioner badge" class="cert-logo" loading="lazy" />
+            <p class="cert-name">AWS Certified Cloud Practitioner</p>
+            <p class="cert-id">ID: 1214D3JC6NEEQLGJ</p>
+            <a href="https://www.credly.com/badges/262482be-00b4-422e-89b1-47cd3bb1af51" target="_blank" rel="noreferrer noopener" class="cert-link">
+              Verify credential
+              <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
             </a>
           </div>
         </div>
-      </section>
-    </main>
-  </div>
+      </div>
+    </section>
+
+    <div class="div"></div>
+
+    <!-- CONTINUING EDUCATION -->
+    <section id="learning" class="section">
+      <div class="c">
+        <div class="sec-hdr fade-up">
+          <span class="sec-num">07</span>
+          <h2 class="sec-title">Continuing Education</h2>
+          <div class="sec-line" aria-hidden="true"></div>
+        </div>
+        <div class="cont-grid fade-up">
+          <div class="cont-card glass">
+            <p class="cont-cat">Amazon Web Services</p>
+            <h3 class="cont-title">Cloud-native architecture &amp; design</h3>
+            <ul>
+              <li>AWS Certified Solutions Architect – Associate (SAA-C03) · Cantrill.io</li>
+              <li>Cloud Practitioner Essentials · AWS Training</li>
+            </ul>
+          </div>
+          <div class="cont-card glass">
+            <p class="cont-cat">Project Management</p>
+            <h3 class="cont-title">Delivery frameworks &amp; stakeholder management</h3>
+            <ul>
+              <li>Google Project Management Specialization · Coursera</li>
+              <li>Project Management Fundamentals &amp; PMP Prep · LinkedIn Learning</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- FOOTER -->
+  <footer aria-label="Site footer">
+    <div class="c">
+      <div class="foot-inner">
+        <span class="foot-brand">Don Kristopher Angeles</span>
+        <div class="foot-stack" role="list" aria-label="Built with">
+          <span style="font-size:0.72rem;color:var(--subtle);margin-right:2px;">Built with:</span>
+          <span class="tpill" role="listitem">AWS S3</span>
+          <span class="tpill" role="listitem">CloudFront</span>
+          <span class="tpill" role="listitem">Lambda</span>
+          <span class="tpill" role="listitem">API Gateway</span>
+          <span class="tpill" role="listitem">DynamoDB</span>
+          <span class="tpill" role="listitem">Terraform</span>
+          <span class="tpill" role="listitem">GitHub Actions</span>
+        </div>
+        <p class="foot-copy">Cloud Resume Challenge · AWS &nbsp;·&nbsp; <span id="visits" style="font-variant-numeric:tabular-nums;">--</span> visits</p>
+      </div>
+    </div>
+  </footer>
 
   <script>
-    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-      anchor.addEventListener('click', event => {
-        event.preventDefault();
-        const target = document.querySelector(anchor.getAttribute('href'));
-        if (target) {
-          target.scrollIntoView({ behavior: 'smooth' });
-        }
+    // Smooth scroll
+    document.querySelectorAll('a[href^="#"]').forEach(a => {
+      a.addEventListener('click', e => {
+        e.preventDefault();
+        const t = document.querySelector(a.getAttribute('href'));
+        if (t) t.scrollIntoView({ behavior: 'smooth' });
       });
     });
-  </script>
-  <script>
+
+    // Visitor counter
     document.addEventListener('DOMContentLoaded', () => {
       fetch('https://9drbe81ae7.execute-api.us-east-1.amazonaws.com/countVisit', { method: 'POST' })
-        .then(response => response.json())
+        .then(r => r.json())
         .then(data => {
-          const visitsElement = document.getElementById('visits');
-          if (visitsElement) {
-            visitsElement.textContent = data;
-          }
+          const v = document.getElementById('visits');
+          if (v) v.textContent = data;
         })
-        .catch(error => console.error('Visitor counter error:', error));
+        .catch(() => {});
     });
+
+    // Active nav link on scroll
+    const sections = document.querySelectorAll('section[id]');
+    const links = document.querySelectorAll('.nav__link');
+    const io = new IntersectionObserver(entries => {
+      entries.forEach(e => {
+        if (e.isIntersecting) {
+          links.forEach(l => l.classList.remove('active'));
+          const a = document.querySelector(`.nav__link[href="#${e.target.id}"]`);
+          if (a) a.classList.add('active');
+        }
+      });
+    }, { rootMargin: '-20% 0px -70% 0px' });
+    sections.forEach(s => io.observe(s));
+
+    // Fade-up on scroll
+    const fadeEls = document.querySelectorAll('.fade-up');
+    const fio = new IntersectionObserver(entries => {
+      entries.forEach(e => {
+        if (e.isIntersecting) { e.target.classList.add('visible'); fio.unobserve(e.target); }
+      });
+    }, { threshold: 0.1 });
+    fadeEls.forEach(el => fio.observe(el));
   </script>
 </body>
 </html>
